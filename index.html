@@ -83,63 +83,15 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.8);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.8); opacity: 0; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Music -->
-  <audio id="bgmIntro" loop>
-    <source src="remo_engagement_bgm.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="bgmYes">
-    <source src="remo_almost_won_her_heart_bgm.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="bgmNo">
-    <source src="remo_a_broken_heart_bgm.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="container">
-    <h1 id="question">
-      Ramya, will you be my forever Valentine? 💖
-    </h1>
-
-    <button id="yes">YES</button>
-    <button id="no">NO</button>
-
-    <div class="love yes-love" id="yesText">
-      Yayyy Ramya ❤️<br>
-      I choose you. Always. 🥰
-    </div>
-
-    <div class="love no-love" id="noText">
-      That’s okay.<br>
-      Some feelings are meant to be felt, not forced 🙂
-	  I wish you all success in life..
-    </div>
-  </div>
-
-  <script>
-    const container = document.querySelector(".container");
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-
-    const introMusic = document.getElementById("bgmIntro");
-    const yesMusic = document.getElementById("bgmYes");
-    const noMusic = document.getElementById("bgmNo");
-
-    // Start intro music on first interaction (mobile-safe)
+ // Play intro music on first interaction (mobile-friendly)
     document.addEventListener("click", () => {
       introMusic.play().catch(() => {});
     }, { once: true });
@@ -152,26 +104,57 @@
       yesMusic.currentTime = 0;
       noMusic.currentTime = 0;
     }
-
+	
+	// Move NO button randomly
     function moveNo() {
       const maxX = container.clientWidth - noBtn.offsetWidth;
       const maxY = container.clientHeight - noBtn.offsetHeight;
-
       noBtn.style.left = Math.random() * maxX + "px";
       noBtn.style.top = Math.random() * maxY + "px";
     }
 
-    // NO button escape + graceful fallback
+    // NO button escape + fallback
     noBtn.addEventListener("mouseenter", moveNo);
     noBtn.addEventListener("mousedown", moveNo);
     noBtn.addEventListener("touchstart", moveNo);
 
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
-
       stopAllMusic();
       noMusic.play();
 
       document.getElementById("question").style.display = "none";
       yesBtn.style.display = "none";
-      noBtn.styles
+      noBtn.style.display = "none";
+      document.getElementById("noText").style.display = "block";
+    });
+
+    // YES button click
+    yesBtn.addEventListener("click", () => {
+      stopAllMusic();
+      yesMusic.play();
+
+      document.getElementById("question").style.display = "none";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      document.getElementById("yesText").style.display = "block";
+
+      startHearts();
+    });
+
+    // Floating hearts animation
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (18 + Math.random() * 24) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }, 120);
+    }
+  </script>
+
+</body>
+</html>
