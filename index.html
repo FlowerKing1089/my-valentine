@@ -90,7 +90,46 @@
 </head>
 
 <body>
+<!-- Music -->
+  <audio id="bgmIntro" loop>
+    <source src="remo_engagement_bgm.mp3" type="audio/mpeg">
+  </audio>
 
+  <audio id="bgmYes">
+    <source src="remo_almost_won_her_heart_bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="bgmNo">
+    <source src="soft_no_bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <h1 id="question">
+      Ramya, will you be my forever Valentine? 💖
+    </h1>
+
+    <button id="yes">YES</button>
+    <button id="no">NO</button>
+
+    <div class="love yes-love" id="yesText">
+      Yayyy Ramya ❤️<br>
+      I choose you. Always. 🥰
+    </div>
+
+    <div class="love no-love" id="noText">
+      That’s okay.<br>
+      Some feelings are meant to be felt, not forced 🙂
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector(".container");
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
+    const introMusic = document.getElementById("bgmIntro");
+    const yesMusic = document.getElementById("bgmYes");
+    const noMusic = document.getElementById("bgmNo");
  // Play intro music on first interaction (mobile-friendly)
     document.addEventListener("click", () => {
       introMusic.play().catch(() => {});
@@ -158,3 +197,4 @@
 
 </body>
 </html>
+
