@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Ramya ❤️</title>
+<title>Ramya ❤️</title>
 
 <style>
 body {
@@ -17,10 +17,10 @@ body {
   position: relative;
 }
 
-/* ---------------- BACKGROUND HEARTS ---------------- */
+/* ---------- BACKGROUND HEARTS ---------- */
 .bg-heart {
   position: absolute;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.18);
   font-size: 20px;
   animation: floatBg linear infinite;
   user-select: none;
@@ -31,7 +31,7 @@ body {
   to { transform: translateY(-10vh) rotate(360deg); }
 }
 
-/* ---------------- PLAY BUTTON ---------------- */
+/* ---------- PLAY BUTTON ---------- */
 #playMusicBtn {
   padding: 16px 34px;
   font-size: 18px;
@@ -51,7 +51,7 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ---------------- CINEMATIC HEART REVEAL ---------------- */
+/* ---------- CINEMATIC HEART ---------- */
 #revealHeart {
   position: fixed;
   font-size: 120px;
@@ -66,7 +66,7 @@ body {
   transform: scale(1.3);
 }
 
-/* ---------------- CONTENT BOX ---------------- */
+/* ---------- CONTENT BOX ---------- */
 .container {
   display: none;
   opacity: 0;
@@ -78,38 +78,31 @@ body {
   padding: 40px 30px;
   border-radius: 30px;
   background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.35), rgba(255,255,255,0.1)),
-    linear-gradient(135deg, #ff5f9e, #ff8fb1);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    radial-gradient(circle at top left, rgba(255,255,255,0.45), rgba(255,255,255,0.25)),
+    linear-gradient(135deg, #d4c2ff, #ffcade); /* pastel lavender + peach */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   position: relative;
   z-index: 6;
-  overflow: hidden;
 }
 
 .container.show {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   opacity: 1;
   transform: scale(1);
 }
 
-.container::before {
-  content: "💖 💕 💘 💞";
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 28px;
-  opacity: 0.3;
-}
-
-/* ---------------- TEXT ---------------- */
+/* ---------- TEXT ---------- */
 h1 {
-  color: white;
+  color: #5a2a6e;
   font-size: 22px;
-  margin-bottom: 35px;
-  text-shadow: 0 0 10px #fff, 0 0 20px #ff80ab;
+  margin-bottom: 40px;
+  text-shadow: 0 0 6px rgba(255,255,255,0.8);
 }
 
-/* ---------------- BUTTONS ---------------- */
+/* ---------- BUTTONS ---------- */
 .option {
   position: absolute;
   height: 40px;
@@ -122,27 +115,28 @@ h1 {
 }
 
 #yes {
-  background: #ff4081;
+  background: #ff5c8a;
   color: white;
-  left: 60px;
-  top: 200px;
+  left: 70px;
+  top: 230px;
 }
 
 #no {
   background: #e0e0e0;
-  left: 190px;
-  top: 200px;
+  left: 260px;
+  top: 230px;
 }
 
-/* ---------------- MESSAGES ---------------- */
+/* ---------- RESPONSE TEXT (CENTERED) ---------- */
 .love {
   display: none;
-  color: white;
-  font-size: 20px;
-  text-shadow: 0 0 8px white;
+  font-size: 22px;
+  line-height: 1.4;
+  text-align: center;
+  color: #5a2a6e;
 }
 
-/* ---------------- FLOATING HEARTS + SPARKLES ---------------- */
+/* ---------- FLOATING HEARTS ---------- */
 .heart {
   position: fixed;
   bottom: -20px;
@@ -167,13 +161,8 @@ h1 {
 
 <body>
 
-<!-- Background hearts -->
-<div id="bgHearts"></div>
-
-<!-- Cinematic heart -->
 <div id="revealHeart">💖</div>
 
-<!-- Audio -->
 <audio id="intro" loop src="remo_engagement_bgm.mp3"></audio>
 <audio id="yesBgm" src="remo_almost_won_her_heart_bgm.mp3"></audio>
 <audio id="noBgm" src="soft_no_bgm.mp3"></audio>
@@ -186,11 +175,13 @@ h1 {
   <button id="no" class="option">NO</button>
 
   <div class="love" id="yesText">
-    My Love ❤️<br>I choose you now and Always. 🥰
+    My Love ❤️<br>
+    I choose you. Always.
   </div>
 
   <div class="love" id="noText">
-    That’s okay 🙂<br>Some feelings stay pure even when unreturned.
+    It’s okay 🙂<br>
+    Some feelings remain beautiful, even unreturned.
   </div>
 </div>
 
@@ -206,7 +197,6 @@ const heart = document.getElementById("revealHeart");
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 const question = document.getElementById("question");
-
 const yesText = document.getElementById("yesText");
 const noText = document.getElementById("noText");
 
@@ -221,11 +211,10 @@ for (let i = 0; i < 60; i++) {
   document.body.appendChild(h);
 }
 
-/* Reveal sequence */
+/* Reveal */
 playBtn.onclick = () => {
   intro.play();
   playBtn.style.display = "none";
-
   heart.classList.add("show");
 
   setTimeout(() => {
@@ -234,7 +223,7 @@ playBtn.onclick = () => {
   }, 1200);
 };
 
-/* NO button escape */
+/* NO escape */
 function moveNo() {
   const maxX = box.clientWidth - noBtn.offsetWidth;
   const maxY = box.clientHeight - noBtn.offsetHeight;
@@ -249,7 +238,9 @@ noBtn.addEventListener("touchstart", moveNo);
 noBtn.onclick = () => {
   intro.pause();
   noBgm.play();
-  box.style.display = "none";
+  question.style.display = "none";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
   noText.style.display = "block";
 };
 
