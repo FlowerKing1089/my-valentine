@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Ramya ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      width: 340px;
+      height: 260px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #e91e63;
+      margin-bottom: 35px;
+      font-size: 22px;
+    }
+
+    button {
+      padding: 10px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      position: absolute;
+      user-select: none;
+      transition: left 0.12s ease, top 0.12s ease;
+    }
+
+    #yes {
+      background-color: #e91e63;
+      color: white;
+      left: 60px;
+      bottom: 35px;
+    }
+
+    #no {
+      background-color: #d3d3d3;
+      left: 180px;
+      bottom: 35px;
+    }
+
+    .love {
+      display: none;
+      font-size: 20px;
+      margin-top: 20px;
+      line-height: 1.4;
+    }
+
+    .yes-love {
+      color: #e91e63;
+    }
+
+    .no-love {
+      color: #555;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 4s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Music -->
+  <audio id="bgmIntro" loop>
+    <source src="remo_engagement_bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="bgmYes">
+    <source src="remo_almost_won_her_heart_bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="bgmNo">
+    <source src="remo_a_broken_heart_bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <h1 id="question">
+      Ramya, will you be my forever Valentine? 💖
+    </h1>
+
+    <button id="yes">YES</button>
+    <button id="no">NO</button>
+
+    <div class="love yes-love" id="yesText">
+      Yayyy Ramya ❤️<br>
+      I choose you. Always. 🥰
+    </div>
+
+    <div class="love no-love" id="noText">
+      That’s okay.<br>
+      Some feelings are meant to be felt, not forced 🙂
+	  I wish you all success in life..
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector(".container");
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
+    const introMusic = document.getElementById("bgmIntro");
+    const yesMusic = document.getElementById("bgmYes");
+    const noMusic = document.getElementById("bgmNo");
+
+    // Start intro music on first interaction (mobile-safe)
+    document.addEventListener("click", () => {
+      introMusic.play().catch(() => {});
+    }, { once: true });
+
+    function stopAllMusic() {
+      introMusic.pause();
+      yesMusic.pause();
+      noMusic.pause();
+      introMusic.currentTime = 0;
+      yesMusic.currentTime = 0;
+      noMusic.currentTime = 0;
+    }
+
+    function moveNo() {
+      const maxX = container.clientWidth - noBtn.offsetWidth;
+      const maxY = container.clientHeight - noBtn.offsetHeight;
+
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
+    }
+
+    // NO button escape + graceful fallback
+    noBtn.addEventListener("mouseenter", moveNo);
+    noBtn.addEventListener("mousedown", moveNo);
+    noBtn.addEventListener("touchstart", moveNo);
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      stopAllMusic();
+      noMusic.play();
+
+      document.getElementById("question").style.display = "none";
+      yesBtn.style.display = "none";
+      noBtn.styles
