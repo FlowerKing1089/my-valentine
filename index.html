@@ -1,200 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For Ramya ❤️</title>
+<meta charset="UTF-8">
+<title>For Ramya ❤️</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #ffb6c1, #ff6f91);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-    .container {
-      text-align: center;
-      background: white;
-      padding: 40px 30px;
-      border-radius: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-      width: 340px;
-      height: 260px;
-      position: relative;
-      z-index: 2;
-    }
+/* ---------------- BACKGROUND HEARTS ---------------- */
+.bg-heart {
+  position: absolute;
+  color: rgba(255,255,255,0.2);
+  font-size: 20px;
+  animation: floatBg linear infinite;
+  user-select: none;
+}
 
-    h1 {
-      color: #e91e63;
-      margin-bottom: 35px;
-      font-size: 22px;
-    }
+@keyframes floatBg {
+  from { transform: translateY(110vh) rotate(0deg); }
+  to { transform: translateY(-10vh) rotate(360deg); }
+}
 
-    button {
-      padding: 10px 26px;
-      font-size: 16px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      position: absolute;
-      user-select: none;
-      transition: left 0.12s ease, top 0.12s ease;
-    }
+/* ---------------- PLAY BUTTON ---------------- */
+#playMusicBtn {
+  padding: 16px 34px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 25px rgba(255,64,129,0.6);
+  animation: pulse 2s infinite;
+}
 
-    #yes {
-      background-color: #e91e63;
-      color: white;
-      left: 60px;
-      bottom: 35px;
-    }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
 
-    #no {
-      background-color: #d3d3d3;
-      left: 180px;
-      bottom: 35px;
-    }
+/* ---------------- CINEMATIC HEART REVEAL ---------------- */
+#revealHeart {
+  position: fixed;
+  font-size: 120px;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 1.2s ease;
+  z-index: 5;
+}
 
-    .love {
-      display: none;
-      font-size: 20px;
-      margin-top: 20px;
-      line-height: 1.4;
-    }
+#revealHeart.show {
+  opacity: 1;
+  transform: scale(1.3);
+}
 
-    .yes-love {
-      color: #e91e63;
-    }
+/* ---------------- CONTENT BOX ---------------- */
+.container {
+  display: none;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 1s ease;
+  text-align: center;
+  width: 360px;
+  height: 280px;
+  padding: 40px 30px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.35), rgba(255,255,255,0.1)),
+    linear-gradient(135deg, #ff5f9e, #ff8fb1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 6;
+  overflow: hidden;
+}
 
-    .no-love {
-      color: #555;
-    }
+.container.show {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
 
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      font-size: 24px;
-      animation: floatUp 4s linear forwards;
-      z-index: 1;
-    }
+.container::before {
+  content: "💖 💕 💘 💞";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 28px;
+  opacity: 0.3;
+}
 
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-110vh) scale(1.8); opacity: 0; }
-    }
-  </style>
+/* ---------------- TEXT ---------------- */
+h1 {
+  color: white;
+  font-size: 22px;
+  margin-bottom: 35px;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ff80ab;
+}
+
+/* ---------------- BUTTONS ---------------- */
+.option {
+  position: absolute;
+  height: 40px;
+  padding: 10px 26px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: left 0.12s ease, top 0.12s ease;
+}
+
+#yes {
+  background: #ff4081;
+  color: white;
+  left: 60px;
+  top: 200px;
+}
+
+#no {
+  background: #e0e0e0;
+  left: 190px;
+  top: 200px;
+}
+
+/* ---------------- MESSAGES ---------------- */
+.love {
+  display: none;
+  color: white;
+  font-size: 20px;
+  text-shadow: 0 0 8px white;
+}
+
+/* ---------------- FLOATING HEARTS + SPARKLES ---------------- */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 26px;
+  animation: floatUp 4s linear forwards;
+  z-index: 2;
+}
+
+.sparkle {
+  text-shadow:
+    0 0 6px #fff,
+    0 0 12px #fff,
+    0 0 20px #ff80ab;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-120vh) scale(1.8); opacity: 0; }
+}
+</style>
 </head>
 
 <body>
-<!-- Music -->
-  <audio id="bgmIntro" loop>
-    <source src="remo_engagement_bgm.mp3" type="audio/mpeg">
-  </audio>
 
-  <audio id="bgmYes">
-    <source src="remo_almost_won_her_heart_bgm.mp3" type="audio/mpeg">
-  </audio>
+<!-- Background hearts -->
+<div id="bgHearts"></div>
 
-  <audio id="bgmNo">
-    <source src="soft_no_bgm.mp3" type="audio/mpeg">
-  </audio>
+<!-- Cinematic heart -->
+<div id="revealHeart">💖</div>
 
-  <div class="container">
-    <h1 id="question">
-      Ramya, will you be my forever Valentine? 💖
-    </h1>
+<!-- Audio -->
+<audio id="intro" loop src="remo_engagement_bgm.mp3"></audio>
+<audio id="yesBgm" src="remo_almost_won_her_heart_bgm.mp3"></audio>
+<audio id="noBgm" src="soft_no_bgm.mp3"></audio>
 
-    <button id="yes">YES</button>
-    <button id="no">NO</button>
+<button id="playMusicBtn">Click here 🎵</button>
 
-    <div class="love yes-love" id="yesText">
-      Yayyy Ramya ❤️<br>
-      I choose you. Always. 🥰
-    </div>
+<div class="container" id="box">
+  <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
+  <button id="yes" class="option">YES</button>
+  <button id="no" class="option">NO</button>
 
-    <div class="love no-love" id="noText">
-      That’s okay.<br>
-      Some feelings are meant to be felt, not forced 🙂
-    </div>
+  <div class="love" id="yesText">
+    My Love ❤️<br>I choose you now and Always. 🥰
   </div>
 
-  <script>
-    const container = document.querySelector(".container");
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
+  <div class="love" id="noText">
+    That’s okay 🙂<br>Some feelings stay pure even when unreturned.
+  </div>
+</div>
 
-    const introMusic = document.getElementById("bgmIntro");
-    const yesMusic = document.getElementById("bgmYes");
-    const noMusic = document.getElementById("bgmNo");
- // Play intro music on first interaction (mobile-friendly)
-    document.addEventListener("click", () => {
-      introMusic.play().catch(() => {});
-    }, { once: true });
+<script>
+const intro = document.getElementById("intro");
+const yesBgm = document.getElementById("yesBgm");
+const noBgm = document.getElementById("noBgm");
 
-    function stopAllMusic() {
-      introMusic.pause();
-      yesMusic.pause();
-      noMusic.pause();
-      introMusic.currentTime = 0;
-      yesMusic.currentTime = 0;
-      noMusic.currentTime = 0;
-    }
-	
-	// Move NO button randomly
-    function moveNo() {
-      const maxX = container.clientWidth - noBtn.offsetWidth;
-      const maxY = container.clientHeight - noBtn.offsetHeight;
-      noBtn.style.left = Math.random() * maxX + "px";
-      noBtn.style.top = Math.random() * maxY + "px";
-    }
+const playBtn = document.getElementById("playMusicBtn");
+const box = document.getElementById("box");
+const heart = document.getElementById("revealHeart");
 
-    // NO button escape + fallback
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("mousedown", moveNo);
-    noBtn.addEventListener("touchstart", moveNo);
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const question = document.getElementById("question");
 
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      stopAllMusic();
-      noMusic.play();
+const yesText = document.getElementById("yesText");
+const noText = document.getElementById("noText");
 
-      document.getElementById("question").style.display = "none";
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      document.getElementById("noText").style.display = "block";
-    });
+/* Background hearts */
+for (let i = 0; i < 60; i++) {
+  const h = document.createElement("div");
+  h.className = "bg-heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = 12 + Math.random() * 20 + "px";
+  h.style.animationDuration = 8 + Math.random() * 12 + "s";
+  document.body.appendChild(h);
+}
 
-    // YES button click
-    yesBtn.addEventListener("click", () => {
-      stopAllMusic();
-      yesMusic.play();
+/* Reveal sequence */
+playBtn.onclick = () => {
+  intro.play();
+  playBtn.style.display = "none";
 
-      document.getElementById("question").style.display = "none";
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      document.getElementById("yesText").style.display = "block";
+  heart.classList.add("show");
 
-      startHearts();
-    });
+  setTimeout(() => {
+    heart.style.opacity = 0;
+    box.classList.add("show");
+  }, 1200);
+};
 
-    // Floating hearts animation
-    function startHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (18 + Math.random() * 24) + "px";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-      }, 120);
-    }
-  </script>
+/* NO button escape */
+function moveNo() {
+  const maxX = box.clientWidth - noBtn.offsetWidth;
+  const maxY = box.clientHeight - noBtn.offsetHeight;
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* NO clicked */
+noBtn.onclick = () => {
+  intro.pause();
+  noBgm.play();
+  box.style.display = "none";
+  noText.style.display = "block";
+};
+
+/* YES clicked */
+yesBtn.onclick = () => {
+  intro.pause();
+  yesBgm.play();
+  question.style.display = "none";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+  yesText.style.display = "block";
+
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart sparkle";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 120);
+};
+</script>
 
 </body>
 </html>
-
