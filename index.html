@@ -114,6 +114,14 @@ h1 {
   transition: left 0.12s ease, top 0.12s ease;
 }
 
+#hint {
+  margin-top: 8px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  color: #6b3a78;
+  opacity: 0.85;
+}
+  
 #yes {
   background: #ff5c8a;
   color: white;
@@ -171,6 +179,9 @@ h1 {
 
 <div class="container" id="box">
   <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
+  <p id="hint">
+  Choose wisely… the <b>NO</b> button is shy 😉
+  </p>
   <button id="yes" class="option">YES</button>
   <button id="no" class="option">NO</button>
 
@@ -231,17 +242,41 @@ function moveNo() {
   noBtn.style.top = Math.random() * maxY + "px";
 }
 
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
+function activateShyNo() {
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchstart", moveNo);
+}
+
+noBtn.addEventListener("click", activateShyNo, { once: true });
 
 /* NO clicked */
+const noTexts = [
+  "NO",
+  "Are you sure? 😶",
+  "Think before you click NO 🙈",
+  "Last chance… maybe YES? 🥺",
+  "Okay this is getting suspicious 😏"
+];
+
+let noClickCount = 0;
+
 noBtn.onclick = () => {
-  intro.pause();
-  noBgm.play();
-  question.style.display = "none";
-  yesBtn.style.display = "none";
-  noBtn.style.display = "none";
-  noText.style.display = "block";
+  noClickCount++;
+
+  if (noClickCount < noTexts.length) {
+    noBtn.innerText = noTexts[noClickCount];
+    moveNo(); // escape immediately after click
+  } else {
+    // FINAL subtle loss message
+    intro.pause();
+    noBgm.play();
+
+    question.style.display = "none";
+    document.getElementById("hint").style.display = "none";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    noText.style.display = "block";
+  }
 };
 
 /* YES clicked */
@@ -266,3 +301,4 @@ yesBtn.onclick = () => {
 
 </body>
 </html>
+
