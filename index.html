@@ -46,9 +46,7 @@ body {
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
   50% { transform: scale(1.08); }
-  100% { transform: scale(1); }
 }
 
 /* ---------- CINEMATIC HEART ---------- */
@@ -74,12 +72,12 @@ body {
   transition: all 1s ease;
   text-align: center;
   width: 360px;
-  height: 280px;
+  height: 340px;
   padding: 40px 30px;
   border-radius: 30px;
   background:
     radial-gradient(circle at top left, rgba(255,255,255,0.45), rgba(255,255,255,0.25)),
-    linear-gradient(135deg, #d4c2ff, #ffcade); /* pastel lavender + peach */
+    linear-gradient(135deg, #d4c2ff, #ffcade);
   box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   position: relative;
   z-index: 6;
@@ -88,7 +86,6 @@ body {
 .container.show {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   opacity: 1;
   transform: scale(1);
@@ -98,8 +95,14 @@ body {
 h1 {
   color: #5a2a6e;
   font-size: 22px;
-  margin-bottom: 40px;
-  text-shadow: 0 0 6px rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+}
+
+#hint {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 34px;
+  min-height: 20px; /* prevents layout jump */
 }
 
 /* ---------- BUTTONS ---------- */
@@ -111,29 +114,28 @@ h1 {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  transition: left 0.12s ease, top 0.12s ease;
 }
 
 #yes {
   background: #ff5c8a;
   color: white;
   left: 70px;
-  top: 230px;
+  top: 250px;
 }
 
 #no {
   background: #e0e0e0;
   left: 260px;
-  top: 230px;
+  top: 250px;
 }
 
-/* ---------- RESPONSE TEXT (CENTERED) ---------- */
+/* ---------- RESPONSE ---------- */
 .love {
   display: none;
   font-size: 22px;
-  line-height: 1.4;
   text-align: center;
   color: #5a2a6e;
+  margin-top: 60px;
 }
 
 /* ---------- FLOATING HEARTS ---------- */
@@ -145,15 +147,7 @@ h1 {
   z-index: 2;
 }
 
-.sparkle {
-  text-shadow:
-    0 0 6px #fff,
-    0 0 12px #fff,
-    0 0 20px #ff80ab;
-}
-
 @keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 1; }
   to { transform: translateY(-120vh) scale(1.8); opacity: 0; }
 }
 </style>
@@ -171,12 +165,13 @@ h1 {
 
 <div class="container" id="box">
   <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
+  <div id="hint">Choose wisely, the "no" button is shy..</div>
+
   <button id="yes" class="option">YES</button>
   <button id="no" class="option">NO</button>
 
   <div class="love" id="yesText">
-    My Love ❤️<br>
-    I choose you. Always.
+    My Love ❤️<br>I choose you. Always.
   </div>
 
   <div class="love" id="noText">
@@ -196,9 +191,18 @@ const heart = document.getElementById("revealHeart");
 
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
-const question = document.getElementById("question");
-const yesText = document.getElementById("yesText");
-const noText = document.getElementById("noText");
+const hint = document.getElementById("hint");
+
+/* Progressive hint texts */
+const hintTexts = [
+  'Choose wisely, the "no" button is shy..',
+  "Are you sure about NO? 😳",
+  "Think once more 🥺",
+  "Your heart knows the answer 💓",
+  "Still chasing NO? 😏",
+  "Okay… last attempt 😌"
+];
+let hintIndex = 0;
 
 /* Background hearts */
 for (let i = 0; i < 60; i++) {
@@ -224,38 +228,38 @@ playBtn.onclick = () => {
 };
 
 /* NO escape */
-function moveNo() {
-  const maxX = box.clientWidth - noBtn.offsetWidth;
-  const maxY = box.clientHeight - noBtn.offsetHeight;
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
-}
+noBtn.addEventListener("mouseenter", () => {
+  hintIndex = Math.min(hintIndex + 1, hintTexts.length - 1);
+  hint.innerText = hintTexts[hintIndex];
 
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
+  const minX = 20, maxX = 260;
+  const minY = 200, maxY = 260;
 
-/* NO clicked */
-noBtn.onclick = () => {
-  intro.pause();
+  noBtn.style.left = Math.random() * (maxX - minX) + minX + "px";
+  noBtn.style.top = Math.random() * (maxY - minY) + minY + "px";
+});
+
+/* HARD BLOCK NO CLICK */
+noBtn.onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
   noBgm.play();
-  question.style.display = "none";
-  yesBtn.style.display = "none";
-  noBtn.style.display = "none";
-  noText.style.display = "block";
 };
 
-/* YES clicked */
+/* YES */
 yesBtn.onclick = () => {
   intro.pause();
   yesBgm.play();
-  question.style.display = "none";
+
   yesBtn.style.display = "none";
   noBtn.style.display = "none";
-  yesText.style.display = "block";
+  hint.style.display = "none";
+  document.getElementById("question").style.display = "none";
+  document.getElementById("yesText").style.display = "block";
 
   setInterval(() => {
     const h = document.createElement("div");
-    h.className = "heart sparkle";
+    h.className = "heart";
     h.innerHTML = "💖";
     h.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(h);
