@@ -2,478 +2,249 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Ramya ❤️</title>
+<title>Ramya 💜</title>
 
 <style>
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 body {
   margin: 0;
   height: 100vh;
+  background: linear-gradient(135deg, #ffccd5, #ffd6e8);
   overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #ffb6c1, #ff6f91);
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  justify-content: center;
 }
 
-/* ---------- BACKGROUND HEARTS ---------- */
+/* Floating background hearts */
 .bg-heart {
   position: absolute;
-  color: rgba(255,255,255,0.18);
   font-size: 20px;
-  animation: floatBg linear infinite;
-  user-select: none;
+  opacity: 0.25;
+  animation: floatBg 10s linear infinite;
 }
 
 @keyframes floatBg {
-  from { transform: translateY(110vh) rotate(0deg); }
-  to   { transform: translateY(-10vh) rotate(360deg); }
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-120vh); }
 }
 
-/* ---------- PLAY BUTTON ---------- */
-#playMusicBtn {
-  padding: 16px 34px;
+/* Music screen */
+#musicScreen {
+  text-align: center;
+  z-index: 10;
+}
+
+#playBtn {
+  padding: 18px 32px;
   font-size: 18px;
-  border-radius: 30px;
   border: none;
-  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  border-radius: 40px;
+  background: #ff5c8a;
   color: white;
   cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 0 25px rgba(255,64,129,0.6);
-  animation: pulse 2s infinite;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(1); }
-}
-
-/* ---------- REVEAL HEART ---------- */
-#revealHeart {
-  position: fixed;
-  font-size: 120px;
-  opacity: 0;
-  transform: scale(0.2);
-  transition: all 1.2s ease;
-  z-index: 5;
-}
-
-#revealHeart.show {
-  opacity: 1;
-  transform: scale(1.3);
-}
-
-/* ---------- CONTENT BOX ---------- */
+/* Main container */
 .container {
-  display: none;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: all 1s ease;
-  width: 360px;
-  height: 300px;
-  padding: 40px 30px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.45), rgba(255,255,255,0.25)),
-    linear-gradient(135deg, #d4c2ff, #ffcade);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  position: relative;
-  z-index: 6;
+  width: 380px;
+  min-height: 360px;
+  background: linear-gradient(135deg, #efe6ff, #ffe8dc);
+  border-radius: 20px;
+  padding: 35px 25px 60px;
   text-align: center;
-
-  /* floating effect */
-  animation: floatBox 4s ease-in-out infinite;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  position: relative;
+  display: none;
+  animation: reveal 1s ease forwards;
 }
 
-@keyframes floatBox {
-  0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-8px) scale(1); }
-  100% { transform: translateY(0) scale(1); }
+@keyframes reveal {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.container.show {
-  display: block;
-  opacity: 1;
-}
-
-/* ---------- TEXT ---------- */
-h1 {
-  color: #5a2a6e;
-  font-size: 22px;
-  margin-bottom: 6px;
+h2 {
+  margin-top: 0;
+  color: #6a0572;
 }
 
 #hint {
-  margin-top: 6px;
-  margin-bottom: 22px;
+  margin: 18px 0 30px;
   font-size: 14px;
-  color: #6b3a78;
-  opacity: 0.9;
-  transition: opacity 0.6s ease;
+  color: #555;
 }
 
-/* ---------- BUTTON ROW ---------- */
-#buttonRow {
+/* Button area */
+.buttons {
   position: relative;
-  width: 100%;
-  height: 70px;
+  height: 120px;
 }
 
-.option {
+/* Buttons */
+button.choice {
   position: absolute;
-  height: 40px;
-  padding: 10px 26px;
+  width: 110px;
+  height: 42px;
   border-radius: 25px;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
-  transition: left 0.12s ease, top 0.12s ease;
 }
 
 #yes {
-  left: 20%;
-  top: 15px;
   background: #ff5c8a;
   color: white;
+  left: 40px;
+  bottom: 0;
 }
 
 #no {
-  left: 55%;
-  top: 15px;
   background: #e0e0e0;
+  left: 200px;
+  bottom: 0;
 }
 
-/* ---------- NO WIGGLE ---------- */
-.wiggle {
-  animation: wiggle 0.4s;
-}
-
-@keyframes wiggle {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-4deg); }
-  50% { transform: rotate(4deg); }
-  75% { transform: rotate(-4deg); }
-  100% { transform: rotate(0deg); }
-}
-
-/* ---------- RESPONSE TEXT ---------- */
-.love {
-  display: none;
-  font-size: 22px;
-  color: #5a2a6e;
+/* Response message */
+#response {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  font-size: 20px;
+  color: #6a0572;
+  padding: 20px;
 }
 
-/* ---------- FLOATING HEARTS ---------- */
+/* Floating hearts on YES */
 .heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 26px;
-  animation: floatUp 4s linear forwards;
-  z-index: 2;
-}
-
-.sparkle {
-  text-shadow:
-    0 0 6px #fff,
-    0 0 12px #fff,
-    0 0 20px #ff80ab;
+  position: absolute;
+  font-size: 24px;
+  animation: floatUp 3s ease-out forwards;
 }
 
 @keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to   { transform: translateY(-120vh) scale(1.8); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-150px); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="revealHeart">💖</div>
-
-<audio id="intro" loop src="remo_engagement_bgm.mp3"></audio>
-<audio id="yesBgm" src="remo_almost_won_her_heart_bgm.mp3"></audio>
-<audio id="noBgm" src="soft_no_bgm.mp3"></audio>
-
-<button id="playMusicBtn">Click here to play music 🎵</button>
-
-<div class="container" id="box">
-  <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
-  <p id="hint">Choose wisely… the <b>NO</b> button is shy 😉</p>
-
-  <div id="buttonRow">
-    <button id="yes" class="option">YES</button>
-    <button id="no" class="option">NO</button>
-  </div>
-
-  <div class="love" id="yesText">
-    Yayyy Ramya ❤️<br>I choose you. Always.
-  </div>
-
-  <div class="love" id="noText">
-    It’s okay 🙂<br>
-    Some feelings stay beautiful, even unreturned.
-  </div>
+<!-- MUSIC SCREEN -->
+<div id="musicScreen">
+  <button id="playBtn">🎵 Click here to play music</button>
 </div>
 
+<!-- MAIN CONTENT -->
+<div class="container" id="mainBox">
+  <h2>Ramya, will you be my forever Valentine? 💜</h2>
+  <div id="hint">Choose wisely, the "no" button is shy..</div>
+
+  <div class="buttons">
+    <button class="choice" id="yes">YES 💖</button>
+    <button class="choice" id="no">NO</button>
+  </div>
+
+  <div id="response"></div>
+</div>
+
+<!-- AUDIO -->
+<audio id="introMusic" src="intro.mp3"></audio>
+<audio id="yesMusic" src="yes.mp3"></audio>
+<audio id="noMusic" src="no.mp3"></audio>
+
 <script>
-const intro = document.getElementById("intro");
-const yesBgm = document.getElementById("yesBgm");
-const noBgm = document.getElementById("noBgm");
-
-const playBtn = document.getElementById("playMusicBtn");
-const box = document.getElementById("box");
-const heart = document.getElementById("revealHeart");
-
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-const hint = document.getElementById("hint");
-
-const question = document.getElementById("question");
-const yesText = document.getElementById("yesText");
-const noText = document.getElementById("noText");
-
-/* background hearts */
-for (let i = 0; i < 60; i++) {
+/* BACKGROUND HEARTS */
+for (let i = 0; i < 25; i++) {
   const h = document.createElement("div");
   h.className = "bg-heart";
-  h.innerHTML = "💖";
+  h.innerText = "💗";
   h.style.left = Math.random() * 100 + "vw";
-  h.style.fontSize = 12 + Math.random() * 20 + "px";
-  h.style.animationDuration = 8 + Math.random() * 12 + "s";
+  h.style.animationDuration = 6 + Math.random() * 6 + "s";
   document.body.appendChild(h);
 }
 
-/* reveal */
-playBtn.onclick = () => {
-  intro.play();
-  playBtn.style.display = "none";
-  heart.classList.add("show");
+/* MUSIC START */
+const playBtn = document.getElementById("playBtn");
+const musicScreen = document.getElementById("musicScreen");
+const mainBox = document.getElementById("mainBox");
 
-  setTimeout(() => {
-    heart.style.opacity = 0;
-    box.classList.add("show");
-  }, 1200);
+playBtn.onclick = () => {
+  document.getElementById("introMusic").play();
+  musicScreen.style.display = "none";
+  mainBox.style.display = "block";
 };
 
-/* NO logic */
+/* NO BUTTON BEHAVIOR */
+const noBtn = document.getElementById("no");
 const noTexts = [
-  "NO",
-  "Are you sure? 😶",
-  "Think before you click 🙈",
-  "Still NO? 🥺",
-  "Okay okay… 😏"
+  "Are you sure? 😳",
+  "Think again 🥺",
+  "Heart says YES 💓",
+  "Still trying NO? 😏",
+  "Okay… last chance 😌"
 ];
-
 let noCount = 0;
 
-function moveNo() {
-  const maxX = box.clientWidth - noBtn.offsetWidth;
-  const maxY = 60;
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
-}
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.style.pointerEvents = "none";
 
-noBtn.onclick = () => {
+  noBtn.innerText = noTexts[noCount % noTexts.length];
   noCount++;
-  noBtn.classList.add("wiggle");
-  setTimeout(() => noBtn.classList.remove("wiggle"), 400);
 
-  if (noCount === 1) {
-    hint.style.opacity = 0;
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("touchstart", moveNo);
-  }
-
-  if (noCount < noTexts.length) {
-    noBtn.innerText = noTexts[noCount];
-    moveNo();
-  } else {
-    intro.pause();
-    noBgm.play();
-    question.style.display = "none";
-    hint.style.display = "none";
-    document.getElementById("buttonRow").style.display = "none";
-    noText.style.display = "flex";
-  }
-};
-
-/* YES */
-yesBtn.onclick = () => {
-  intro.pause();
-  yesBgm.play();
-  question.style.display = "none";
-  hint.style.display = "none";
-  document.getElementById("buttonRow").style.display = "none";
-  yesText.style.display = "flex";
-
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart sparkle";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 4000);
-  }, 120);
-};
-</script>
-
-</body>
-</html>  
-  
-    0 0 12px #fff,
-    0 0 20px #ff80ab;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-120vh) scale(1.8); opacity: 0; }
-}
-</style>
-</head>
-
-<body>
-
-<div id="revealHeart">💖</div>
-
-<audio id="intro" loop src="remo_engagement_bgm.mp3"></audio>
-<audio id="yesBgm" src="remo_almost_won_her_heart_bgm.mp3"></audio>
-<audio id="noBgm" src="soft_no_bgm.mp3"></audio>
-
-<button id="playMusicBtn">Click here 🎵</button>
-
-<div class="container" id="box">
-  <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
-  <p id="hint">
-  Choose wisely… the <b>NO</b> button is shy 😉
-  </p>
-  <button id="yes" class="option">YES</button>
-  <button id="no" class="option">NO</button>
-
-  <div class="love" id="yesText">
-    My Love ❤️<br>
-    I choose you. Always.
-  </div>
-
-  <div class="love" id="noText">
-    It’s okay 🙂<br>
-    Some feelings remain beautiful, even unreturned.
-  </div>
-</div>
-
-<script>
-const intro = document.getElementById("intro");
-const yesBgm = document.getElementById("yesBgm");
-const noBgm = document.getElementById("noBgm");
-
-const playBtn = document.getElementById("playMusicBtn");
-const box = document.getElementById("box");
-const heart = document.getElementById("revealHeart");
-
-const yesBtn = document.getElementById("yes");
-const noBtn = document.getElementById("no");
-const question = document.getElementById("question");
-const yesText = document.getElementById("yesText");
-const noText = document.getElementById("noText");
-
-/* Background hearts */
-for (let i = 0; i < 60; i++) {
-  const h = document.createElement("div");
-  h.className = "bg-heart";
-  h.innerHTML = "💖";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.fontSize = 12 + Math.random() * 20 + "px";
-  h.style.animationDuration = 8 + Math.random() * 12 + "s";
-  document.body.appendChild(h);
-}
-
-/* Reveal */
-playBtn.onclick = () => {
-  intro.play();
-  playBtn.style.display = "none";
-  heart.classList.add("show");
-
-  setTimeout(() => {
-    heart.style.opacity = 0;
-    box.classList.add("show");
-  }, 1200);
-};
-
-/* NO escape */
-function moveNo() {
+  const box = document.querySelector(".buttons");
   const maxX = box.clientWidth - noBtn.offsetWidth;
   const maxY = box.clientHeight - noBtn.offsetHeight;
+
   noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
-}
+  noBtn.style.bottom = Math.random() * maxY + "px";
 
-function activateShyNo() {
-  noBtn.addEventListener("mouseenter", moveNo);
-  noBtn.addEventListener("touchstart", moveNo);
-}
+  setTimeout(() => {
+    noBtn.style.pointerEvents = "auto";
+  }, 400);
+});
 
-noBtn.addEventListener("click", activateShyNo, { once: true });
-
-/* NO clicked */
-const noTexts = [
-  "NO",
-  "Are you sure? 😶",
-  "Think before you click NO 🙈",
-  "Last chance… maybe YES? 🥺",
-  "Okay this is getting suspicious 😏"
-];
-
-let noClickCount = 0;
-
-noBtn.onclick = () => {
-  noClickCount++;
-
-  if (noClickCount < noTexts.length) {
-    noBtn.innerText = noTexts[noClickCount];
-    moveNo(); // escape immediately after click
-  } else {
-    // FINAL subtle loss message
-    intro.pause();
-    noBgm.play();
-
-    question.style.display = "none";
-    document.getElementById("hint").style.display = "none";
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
-    noText.style.display = "block";
-  }
+/* EXTRA SAFETY: disable click */
+noBtn.onclick = (e) => {
+  e.preventDefault();
+  document.getElementById("noMusic").play();
 };
 
-/* YES clicked */
-yesBtn.onclick = () => {
-  intro.pause();
-  yesBgm.play();
-  question.style.display = "none";
-  yesBtn.style.display = "none";
-  noBtn.style.display = "none";
-  yesText.style.display = "block";
+/* YES BUTTON */
+document.getElementById("yes").onclick = () => {
+  document.getElementById("introMusic").pause();
+  document.getElementById("yesMusic").play();
 
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart sparkle";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 4000);
-  }, 120);
+  document.querySelector(".buttons").style.display = "none";
+  document.getElementById("hint").style.display = "none";
+
+  const res = document.getElementById("response");
+  res.style.display = "flex";
+  res.innerHTML = "You just made my world brighter 💖";
+
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖✨";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "0px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }
 };
 </script>
 
 </body>
 </html>
+
 
 
 
