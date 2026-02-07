@@ -2,250 +2,267 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ramya 💜</title>
+<title>Ramya ❤️</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(135deg, #ffccd5, #ffd6e8);
   overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #ffb6c1, #ff6f91);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-/* Floating background hearts */
+/* ---------- BACKGROUND HEARTS ---------- */
 .bg-heart {
   position: absolute;
+  color: rgba(255,255,255,0.18);
   font-size: 20px;
-  opacity: 0.25;
-  animation: floatBg 10s linear infinite;
+  animation: floatBg linear infinite;
+  user-select: none;
 }
 
 @keyframes floatBg {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-120vh); }
+  from { transform: translateY(110vh) rotate(0deg); }
+  to { transform: translateY(-10vh) rotate(360deg); }
 }
 
-/* Music screen */
-#musicScreen {
-  text-align: center;
-  z-index: 10;
-}
-
-#playBtn {
-  padding: 18px 32px;
+/* ---------- PLAY BUTTON ---------- */
+#playMusicBtn {
+  padding: 16px 34px;
   font-size: 18px;
+  border-radius: 30px;
   border: none;
-  border-radius: 40px;
-  background: #ff5c8a;
+  background: linear-gradient(45deg, #ff4081, #ff80ab);
   color: white;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10;
+  box-shadow: 0 0 25px rgba(255,64,129,0.6);
+  animation: pulse 2s infinite;
 }
 
-/* Main container */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- CINEMATIC HEART ---------- */
+#revealHeart {
+  position: fixed;
+  font-size: 120px;
+  opacity: 0;
+  transform: scale(0.2);
+  transition: all 1.2s ease;
+  z-index: 5;
+}
+
+#revealHeart.show {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* ---------- CONTENT BOX ---------- */
 .container {
-  width: 380px;
-  min-height: 360px;
-  background: linear-gradient(135deg, #efe6ff, #ffe8dc);
-  border-radius: 20px;
-  padding: 35px 25px 60px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-  position: relative;
   display: none;
-  animation: reveal 1s ease forwards;
-}
-
-@keyframes reveal {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-h2 {
-  margin-top: 0;
-  color: #6a0572;
-}
-
-#hint {
-  margin: 18px 0 30px;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Button area */
-.buttons {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 1s ease;
+  text-align: center;
+  width: 360px;
+  height: 280px;
+  padding: 40px 30px;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.45), rgba(255,255,255,0.25)),
+    linear-gradient(135deg, #d4c2ff, #ffcade); /* pastel lavender + peach */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   position: relative;
-  height: 120px;
+  z-index: 6;
 }
 
-/* Buttons */
-button.choice {
+.container.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---------- TEXT ---------- */
+h1 {
+  color: #5a2a6e;
+  font-size: 22px;
+  margin-bottom: 40px;
+  text-shadow: 0 0 6px rgba(255,255,255,0.8);
+}
+
+/* ---------- BUTTONS ---------- */
+.option {
   position: absolute;
-  width: 110px;
-  height: 42px;
+  height: 40px;
+  padding: 10px 26px;
   border-radius: 25px;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
+  transition: left 0.12s ease, top 0.12s ease;
 }
 
 #yes {
   background: #ff5c8a;
   color: white;
-  left: 40px;
-  bottom: 0;
+  left: 70px;
+  top: 230px;
 }
 
 #no {
   background: #e0e0e0;
-  left: 200px;
-  bottom: 0;
+  left: 260px;
+  top: 230px;
 }
 
-/* Response message */
-#response {
-  position: absolute;
-  inset: 0;
+/* ---------- RESPONSE TEXT (CENTERED) ---------- */
+.love {
   display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #6a0572;
-  padding: 20px;
+  font-size: 22px;
+  line-height: 1.4;
+  text-align: center;
+  color: #5a2a6e;
 }
 
-/* Floating hearts on YES */
+/* ---------- FLOATING HEARTS ---------- */
 .heart {
-  position: absolute;
-  font-size: 24px;
-  animation: floatUp 3s ease-out forwards;
+  position: fixed;
+  bottom: -20px;
+  font-size: 26px;
+  animation: floatUp 4s linear forwards;
+  z-index: 2;
+}
+
+.sparkle {
+  text-shadow:
+    0 0 6px #fff,
+    0 0 12px #fff,
+    0 0 20px #ff80ab;
 }
 
 @keyframes floatUp {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-150px); opacity: 0; }
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-120vh) scale(1.8); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC SCREEN -->
-<div id="musicScreen">
-  <button id="playBtn">🎵 Click here to play music</button>
-</div>
+<div id="revealHeart">💖</div>
 
-<!-- MAIN CONTENT -->
-<div class="container" id="mainBox">
-  <h2>Ramya, will you be my forever Valentine? 💜</h2>
-  <div id="hint">Choose wisely, the "no" button is shy..</div>
+<audio id="intro" loop src="remo_engagement_bgm.mp3"></audio>
+<audio id="yesBgm" src="remo_almost_won_her_heart_bgm.mp3"></audio>
+<audio id="noBgm" src="soft_no_bgm.mp3"></audio>
 
-  <div class="buttons">
-    <button class="choice" id="yes">YES 💖</button>
-    <button class="choice" id="no">NO</button>
+<button id="playMusicBtn">Click here 🎵</button>
+
+<div class="container" id="box">
+  <h1 id="question">Ramya, will you be my forever Valentine? 💖</h1>
+  <button id="yes" class="option">YES</button>
+  <button id="no" class="option">NO</button>
+
+  <div class="love" id="yesText">
+    My Love ❤️<br>
+    I choose you. Always.
   </div>
 
-  <div id="response"></div>
+  <div class="love" id="noText">
+    It’s okay 🙂<br>
+    Some feelings remain beautiful, even unreturned.
+  </div>
 </div>
 
-<!-- AUDIO -->
-<audio id="introMusic" src="intro.mp3"></audio>
-<audio id="yesMusic" src="yes.mp3"></audio>
-<audio id="noMusic" src="no.mp3"></audio>
-
 <script>
-/* BACKGROUND HEARTS */
-for (let i = 0; i < 25; i++) {
+const intro = document.getElementById("intro");
+const yesBgm = document.getElementById("yesBgm");
+const noBgm = document.getElementById("noBgm");
+
+const playBtn = document.getElementById("playMusicBtn");
+const box = document.getElementById("box");
+const heart = document.getElementById("revealHeart");
+
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const question = document.getElementById("question");
+const yesText = document.getElementById("yesText");
+const noText = document.getElementById("noText");
+
+/* Background hearts */
+for (let i = 0; i < 60; i++) {
   const h = document.createElement("div");
   h.className = "bg-heart";
-  h.innerText = "💗";
+  h.innerHTML = "💖";
   h.style.left = Math.random() * 100 + "vw";
-  h.style.animationDuration = 6 + Math.random() * 6 + "s";
+  h.style.fontSize = 12 + Math.random() * 20 + "px";
+  h.style.animationDuration = 8 + Math.random() * 12 + "s";
   document.body.appendChild(h);
 }
 
-/* MUSIC START */
-const playBtn = document.getElementById("playBtn");
-const musicScreen = document.getElementById("musicScreen");
-const mainBox = document.getElementById("mainBox");
-
+/* Reveal */
 playBtn.onclick = () => {
-  document.getElementById("introMusic").play();
-  musicScreen.style.display = "none";
-  mainBox.style.display = "block";
-};
-
-/* NO BUTTON BEHAVIOR */
-const noBtn = document.getElementById("no");
-const noTexts = [
-  "Are you sure? 😳",
-  "Think again 🥺",
-  "Heart says YES 💓",
-  "Still trying NO? 😏",
-  "Okay… last chance 😌"
-];
-let noCount = 0;
-
-noBtn.addEventListener("mouseenter", () => {
-  noBtn.style.pointerEvents = "none";
-
-  noBtn.innerText = noTexts[noCount % noTexts.length];
-  noCount++;
-
-  const box = document.querySelector(".buttons");
-  const maxX = box.clientWidth - noBtn.offsetWidth;
-  const maxY = box.clientHeight - noBtn.offsetHeight;
-
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.bottom = Math.random() * maxY + "px";
+  intro.play();
+  playBtn.style.display = "none";
+  heart.classList.add("show");
 
   setTimeout(() => {
-    noBtn.style.pointerEvents = "auto";
-  }, 400);
-});
-
-/* EXTRA SAFETY: disable click */
-noBtn.onclick = (e) => {
-  e.preventDefault();
-  document.getElementById("noMusic").play();
+    heart.style.opacity = 0;
+    box.classList.add("show");
+  }, 1200);
 };
 
-/* YES BUTTON */
-document.getElementById("yes").onclick = () => {
-  document.getElementById("introMusic").pause();
-  document.getElementById("yesMusic").play();
+/* NO escape */
+function moveNo() {
+  const maxX = box.clientWidth - noBtn.offsetWidth;
+  const maxY = box.clientHeight - noBtn.offsetHeight;
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
 
-  document.querySelector(".buttons").style.display = "none";
-  document.getElementById("hint").style.display = "none";
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
 
-  const res = document.getElementById("response");
-  res.style.display = "flex";
-  res.innerHTML = "You just made my world brighter 💖";
+/* NO clicked */
+noBtn.onclick = () => {
+  intro.pause();
+  noBgm.play();
+  question.style.display = "none";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+  noText.style.display = "block";
+};
 
-  for (let i = 0; i < 25; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖✨";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.bottom = "0px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 3000);
-  }
+/* YES clicked */
+yesBtn.onclick = () => {
+  intro.pause();
+  yesBgm.play();
+  question.style.display = "none";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+  yesText.style.display = "block";
+
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart sparkle";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 120);
 };
 </script>
 
 </body>
 </html>
-
-
-
-
-
